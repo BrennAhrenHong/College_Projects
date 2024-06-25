@@ -1,0 +1,209 @@
+﻿<Window x:Class="TheGraphProject.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TheGraphProject"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        Title="Shortest Path Simulator" Height="720" Width="1080"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}">
+    <Grid>
+        <!--Main Grid-->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="10*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+
+        <!--Left Column SubGrid (List Panel)-->
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="35"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="150"/>
+            </Grid.RowDefinitions>
+
+            <ListView Name="ListViewVerticesList" SelectionMode="Single" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Top" Width="200" Margin="10,25" SelectionChanged="ListViewVerticesList_SelectionChanged">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Vertex ID" Width="50" DisplayMemberBinding="{Binding ID}"/>
+                        <GridViewColumn Header="Name" Width="100" DisplayMemberBinding="{Binding Name}">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBox Text="{Binding Path= Name}" TextWrapping="Wrap" Margin="0" IsReadOnly="False"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+
+            <ListView Name="ListViewEdgeList" SelectionMode="Single"  Grid.Row="2" Margin="0,25" HorizontalAlignment="Center" VerticalAlignment="Top" MinWidth="200" SelectionChanged="ListViewEdge_SelectionChanged" >
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Edge ID" DisplayMemberBinding="{Binding Edge}"/>
+                        <GridViewColumn Header="Edge Name" DisplayMemberBinding="{Binding Name}"/>
+                        <GridViewColumn Header="Weight" DisplayMemberBinding="{Binding Weight}"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+
+            <Grid Grid.Row="3">
+                <RadioButton Name="RadioButtonWeighted" GroupName="WeightMode" IsChecked="False" Content="Weighted" HorizontalAlignment="Left" Margin="10,98,0,35" Click="RadioButtonWeighted_Click"/>
+                <RadioButton Name="RadioButtonUnweighted" GroupName="WeightMode" IsChecked="False" Content="Unweighted" HorizontalAlignment="Left" Margin="93,98,0,0" VerticalAlignment="Top" Click="RadioButtonUnweighted_Click"/>
+                <RadioButton Name="RadioButtonDirected" GroupName="LineMode" IsChecked="false" Content="Directed" HorizontalAlignment="Left" Margin="10,123,0,0" VerticalAlignment="Top"/>
+                <RadioButton Name="RadioButtonUndirected" GroupName="LineMode" IsChecked="False" Content="Undirected" HorizontalAlignment="Left" Margin="93,122,0,0" VerticalAlignment="Top"/>
+
+            </Grid>
+            <Button Name="BtnDelete" Width="180" Height="45" Background="Transparent" Foreground="Red" BorderBrush="Red" Content="Delete" HorizontalAlignment="Center" Margin="10,10,0,0" Grid.Row="3" VerticalAlignment="Top" Click="BtnDelete_Click"/>
+            <Button Content="Clear All" BorderBrush="Black" FontSize="12" Width="185"  HorizontalAlignment="Center" Background="DarkRed" Margin="5" VerticalAlignment="Top" Height="22" Click="Button_Click_1"/>
+            <Label Content="Vertices ListView" HorizontalAlignment="Left" Margin="47,9,0,0" Grid.Row="1" VerticalAlignment="Top"/>
+            <Label Content="Edge ListView" HorizontalAlignment="Left" Margin="47,1,0,0" Grid.Row="2" VerticalAlignment="Top"/>
+        </Grid>
+
+        <!--Center Column SubGrid Canvas and Control Panel-->
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="35"></RowDefinition>
+                <RowDefinition Height="10*"></RowDefinition>
+                <RowDefinition Height="3*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Border Grid.Row="1" BorderThickness="1" BorderBrush="Black" Grid.ColumnSpan="3">
+                <Canvas Name="CanvasGraph" ClipToBounds="True" Background="AliceBlue" MouseMove="CanvasGraph_MouseMove" MouseRightButtonDown="CanvasGraph_MouseRightButtonDown">
+                    <Canvas.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Name="CMenuItemAddVertex" Header="Add Vertex" Click="CMenuItemAddVertex_OnClick"/>
+                        </ContextMenu>
+                    </Canvas.ContextMenu>
+                </Canvas>
+
+            </Border>
+
+            <!--Left side Control Panel (Add Vertex)-->
+            <StackPanel Grid.Row="2" Grid.Column="0">
+
+                <Grid Height="auto">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition  />
+                        <ColumnDefinition  />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="0" Grid.ColumnSpan="2">
+                        <TextBlock HorizontalAlignment="Left"
+                                   TextWrapping="Wrap" Text="Name:" VerticalAlignment="Center"/>
+                        <TextBox Name="TxtbVertexName"
+                                 HorizontalAlignment="Center" Height="25" Margin="5,10"
+                                 TextWrapping="Wrap" VerticalAlignment="Center"
+                                 Width="183"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Margin="0,0,15,0" HorizontalAlignment="Right" Grid.Row="1" Grid.Column="0">
+                        <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="X:"
+                                   VerticalAlignment="Center"/>
+                        <TextBox Name="TxtBoxManualXCoords" HorizontalAlignment="Center"
+                                 Height="25" TextWrapping="Wrap" VerticalAlignment="Top" Width="55" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="15,0,0,0" Grid.Row="1" Grid.Column="1">
+                        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Y:" VerticalAlignment="Center"/>
+                        <TextBox Name="TxtBoxManualYCoords" Grid.Row="1" HorizontalAlignment="Center" Height="25"
+                                 TextWrapping="Wrap" VerticalAlignment="Center" Width="55"/>
+                    </StackPanel>
+
+                </Grid>
+                <Button Name="BtnAddVertex" FontWeight="Bold"  Content="Add Vertex"
+                        HorizontalAlignment="Center" Margin="20,25" Width="150" VerticalAlignment="Center" Click="BtnAddVertex_Click"/>
+            </StackPanel>
+
+
+            <!--Middle Control Panel (Add Weight)-->
+            <TextBlock Grid.Column="1" HorizontalAlignment="Center" Margin="54,16,190,0" Grid.Row="2" TextWrapping="Wrap" Text="Starting Vertex:" VerticalAlignment="Top" Width="91"/>
+            <TextBlock Grid.Column="1" HorizontalAlignment="Center" Margin="5,51,127,0" Grid.Row="2" TextWrapping="Wrap" Text="Ending Vertex:" VerticalAlignment="Top" Width="91"/>
+            <TextBlock Grid.Column="1" HorizontalAlignment="Center" Margin="99,83,190,0" Grid.Row="2" TextWrapping="Wrap" Text="Weight: " VerticalAlignment="Top" Width="46"/>
+            <ComboBox Name="CmbStartingVertex" Grid.Column="1" ItemsSource="{Binding VertexList}" HorizontalAlignment="Center" Grid.Row="2" VerticalAlignment="Top" Width="120" Margin="96,9,7,0" DropDownOpened="ComboBox_DropDownOpened" DropDownClosed="CmbStartingVertex_DropDownClosed"/>
+            <ComboBox Name="CmbEndingVertex" Grid.Column="1" ItemsSource="{Binding VertexList}" HorizontalAlignment="Center" Margin="96,42,7,0" Grid.Row="2" VerticalAlignment="Top" Width="120" DropDownOpened="CmbEndingVertex_DropDownOpened" DropDownClosed="CmbEndingVertex_DropDownClosed"/>
+
+            <TextBox Name="TxtbWeight" Grid.Column="1" IsReadOnly="False" HorizontalAlignment="Left" Height="24" Margin="150,75,0,0" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+            <Button Name="BtnAddEdge" Content="Add Edge" HorizontalAlignment="Center" Margin="20,10"  Height="33" Width="120" Grid.Row="2" Grid.Column="1" VerticalAlignment="Bottom" Click="BtnAddEdge_Click"/>
+
+            <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" Margin="0,9,0,0" TextWrapping="Wrap" Text="X:" VerticalAlignment="Top"/>
+            <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" Margin="75,9,0,0" TextWrapping="Wrap" Text="Y:" VerticalAlignment="Top"/>
+            <TextBox Name="TxtboxAutoCaptureXCoords" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" Height="24" Margin="15,6,0,0" TextWrapping="Wrap" Text="Insert Name" VerticalAlignment="Top" Width="55"/>
+            <TextBox Name="TxtboxAutoCaptureYCoords" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" Height="24" Margin="89,6,0,0" TextWrapping="Wrap" Text="Insert Name" VerticalAlignment="Top" Width="55"/>
+            <TextBox Name="TxtboxPath" Grid.Column="1" HorizontalScrollBarVisibility="Auto" HorizontalAlignment="Left" Height="25" Margin="35,5,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="290"/>
+            <TextBlock Name="TextBlockLineEdgeErrorMsg" HorizontalAlignment="Right" Visibility="Visible"
+                       Grid.Column="1" Grid.Row="2" Margin="15" Foreground="Red" TextWrapping="Wrap"
+                       Text="Invalid Action!"  VerticalAlignment="Bottom" Width="86"/>
+            <Label Content="Path:" Grid.Column="1" Width="35" HorizontalAlignment="Left" Margin="0,5,0,0" VerticalAlignment="Top"/>
+
+        </Grid>
+
+        <!--Right Column SubGrid (Info Panel)-->
+        <Grid Grid.Column="2">
+            <StackPanel>
+                <TabControl>
+                    <TabItem Header="Controls">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"></RowDefinition>
+                                <RowDefinition Height="107"></RowDefinition>
+                                <RowDefinition Height="200"></RowDefinition>
+                                <RowDefinition Height="200"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <StackPanel Grid.Row="0" Margin="10">
+                                <StackPanel Orientation="Horizontal" Margin="5">
+                                    <TextBlock HorizontalAlignment="Left" Margin="0,0,10,0" Text="From:" TextAlignment="Right"
+                                               TextWrapping="Wrap" VerticalAlignment="Bottom" Width="35" />
+                                    <ComboBox Name="CmbStartingVertexSp" VerticalAlignment="Center" HorizontalAlignment="Stretch" Width=" 120"
+                                              DropDownOpened="CmbStartingVertexSp_DropDownOpened"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="5">
+                                    <TextBlock HorizontalAlignment="Right" Margin="0,0,10,0" TextWrapping="Wrap" Text="To:" TextAlignment="Right"
+                                               VerticalAlignment="Bottom" Width="35"/>
+                                    <ComboBox Name="CmbEndingVertexSp" VerticalAlignment="Center" HorizontalAlignment="Stretch" Width="120"
+                                              DropDownOpened="CmbEndingVertexSp_DropDownOpened"/>
+                                </StackPanel>
+                                <Button Name="BtnGetShortestPath" Content="Find" FontWeight="Bold" Margin="5,15,0,0" HorizontalAlignment="Center"
+                                        VerticalAlignment="Center" Width="120" Height="35" Click="BtnSolveShortestPath_Click"/>
+
+                                <Button Name="BtnReset" Content="Reset" Margin="5" Height="25" Width="120" IsEnabled="False" Click="Button_Click"/>
+                            </StackPanel>
+                        </Grid>
+                    </TabItem>
+                    <TabItem Header="More Info">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition  Height="150*"></RowDefinition>
+                                <RowDefinition Height="150*"></RowDefinition>
+                                <RowDefinition Height="150"></RowDefinition>
+                                <RowDefinition Height="150"></RowDefinition>
+                            </Grid.RowDefinitions>
+
+                            <TextBox Name="TxtbAdjacencyList" Background="WhiteSmoke" Height="150" TextWrapping="Wrap" Text="TextBox" HorizontalScrollBarVisibility="Auto" Grid.Row="0" VerticalScrollBarVisibility="Auto"/>
+                            <TextBox Name="TxtbNeighborList" Background="WhiteSmoke"  Height="150" TextWrapping="Wrap" Text="TextBox" HorizontalScrollBarVisibility="Auto" Grid.Row="1" VerticalScrollBarVisibility="Auto"/>
+                            <TextBox Name="TxtbPredecessor" Background="WhiteSmoke" Height="150" TextWrapping="Wrap" Text="TextBox" HorizontalScrollBarVisibility="Auto" Grid.Row="2" VerticalScrollBarVisibility="Auto"/>
+                            <TextBox Name="TxtbCost"  Background="WhiteSmoke" Height="150" TextWrapping="Wrap" Text="TextBox" HorizontalScrollBarVisibility="Auto" Grid.Row="3" VerticalScrollBarVisibility="Auto"/>
+                        </Grid>
+                    </TabItem>
+                </TabControl>
+                <ListView/>
+
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>
