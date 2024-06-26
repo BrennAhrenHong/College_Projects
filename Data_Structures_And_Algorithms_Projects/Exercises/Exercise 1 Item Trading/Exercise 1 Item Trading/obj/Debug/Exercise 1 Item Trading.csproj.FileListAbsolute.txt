@@ -1,0 +1,7 @@
+C:\Users\Asus\source\repos\Exercise 1 Item Trading\Exercise 1 Item Trading\obj\Debug\Exercise 1 Item Trading.csprojAssemblyReference.cache
+C:\Users\Asus\source\repos\Exercise 1 Item Trading\Exercise 1 Item Trading\obj\Debug\Exercise 1 Item Trading.csproj.CoreCompileInputs.cache
+C:\Users\Asus\source\repos\Exercise 1 Item Trading\Exercise 1 Item Trading\bin\Debug\Exercise 1 Item Trading.exe.config
+C:\Users\Asus\source\repos\Exercise 1 Item Trading\Exercise 1 Item Trading\bin\Debug\Exercise 1 Item Trading.exe
+C:\Users\Asus\source\repos\Exercise 1 Item Trading\Exercise 1 Item Trading\bin\Debug\Exercise 1 Item Trading.pdb
+C:\Users\Asus\source\repos\Exercise 1 Item Trading\Exercise 1 Item Trading\obj\Debug\Exercise 1 Item Trading.exe
+C:\Users\Asus\source\repos\Exercise 1 Item Trading\Exercise 1 Item Trading\obj\Debug\Exercise 1 Item Trading.pdb

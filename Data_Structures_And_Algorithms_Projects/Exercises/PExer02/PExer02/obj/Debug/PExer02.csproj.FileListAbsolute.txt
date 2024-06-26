@@ -1,0 +1,14 @@
+D:\General Documents\GitHub\2ndYear-DataStructures-Exercises\PExer02\PExer02\bin\Debug\PExer02.exe.config
+D:\General Documents\GitHub\2ndYear-DataStructures-Exercises\PExer02\PExer02\bin\Debug\PExer02.exe
+D:\General Documents\GitHub\2ndYear-DataStructures-Exercises\PExer02\PExer02\bin\Debug\PExer02.pdb
+D:\General Documents\GitHub\2ndYear-DataStructures-Exercises\PExer02\PExer02\obj\Debug\PExer02.csprojAssemblyReference.cache
+D:\General Documents\GitHub\2ndYear-DataStructures-Exercises\PExer02\PExer02\obj\Debug\MainWindow.g.cs
+D:\General Documents\GitHub\2ndYear-DataStructures-Exercises\PExer02\PExer02\obj\Debug\App.g.cs
+D:\General Documents\GitHub\2ndYear-DataStructures-Exercises\PExer02\PExer02\obj\Debug\PExer02_MarkupCompile.cache
+D:\General Documents\GitHub\2ndYear-DataStructures-Exercises\PExer02\PExer02\obj\Debug\PExer02_MarkupCompile.lref
+D:\General Documents\GitHub\2ndYear-DataStructures-Exercises\PExer02\PExer02\obj\Debug\MainWindow.baml
+D:\General Documents\GitHub\2ndYear-DataStructures-Exercises\PExer02\PExer02\obj\Debug\PExer02.g.resources
+D:\General Documents\GitHub\2ndYear-DataStructures-Exercises\PExer02\PExer02\obj\Debug\PExer02.Properties.Resources.resources
+D:\General Documents\GitHub\2ndYear-DataStructures-Exercises\PExer02\PExer02\obj\Debug\PExer02.csproj.GenerateResource.cache
+D:\General Documents\GitHub\2ndYear-DataStructures-Exercises\PExer02\PExer02\obj\Debug\PExer02.exe
+D:\General Documents\GitHub\2ndYear-DataStructures-Exercises\PExer02\PExer02\obj\Debug\PExer02.pdb
